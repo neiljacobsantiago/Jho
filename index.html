@@ -65,8 +65,24 @@
             margin: 0 auto 15px auto;
         }
 
-        /* Stage 1: Typewriter */
-        #typewriter { border-right: 2px solid var(--text-color); white-space: nowrap; overflow: hidden; margin: 0 auto; }
+        /* Stage 1: Typewriter - Fixed for long text wrapping */
+        #typewriter-container {
+            width: 100%;
+            max-width: 90vw; 
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #typewriter { 
+            display: inline; 
+            border-right: 2px solid var(--text-color); 
+            animation: blinkCursor 0.75s step-end infinite;
+        }
+
+        @keyframes blinkCursor {
+            from, to { border-color: transparent; }
+            50% { border-color: var(--text-color); }
+        }
         
         .scroll-indicator {
             position: absolute;
@@ -195,8 +211,10 @@
 
     <!-- Stage 1: The Hook -->
     <section id="s1" class="visible">
-        <h1 id="typewriter"></h1>
-        <p style="opacity: 0; animation: fadeIn 2s forwards 2.5s;">Di parin nagkikita in-person☹️.</p>
+        <div id="typewriter-container">
+            <h1 id="typewriter"></h1>
+        </div>
+        <p style="opacity: 0; animation: fadeIn 2s forwards 3.5s;">Di parin nagkikita in-person☹️.</p>
         <div class="scroll-indicator">Scroll down</div>
         <style>@keyframes fadeIn { to { opacity: 0.8; } }</style>
     </section>
