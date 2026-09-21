@@ -1,7 +1,7 @@
 import * as THREE from 'https://cdn.skypack.dev/three@0.139.1/build/three.module';
 
 // 1. Typewriter Effect
-const text = "Crazy na 1 month na since nung nagkita tayo, anyways";
+const text = "Crazy na 1 month na since nung nagkita tayo online, anyways";
 let i = 0;
 function typeWriter() {
     if (i < text.length) {
