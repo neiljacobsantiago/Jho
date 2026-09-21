@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#241610">
+    <title>Jho</title>
+    <link rel="stylesheet" href="ask.css">
+</head>
+<body class="not-loaded">
+
+    <div class="film-grain"></div>
+    <audio id="successSound" src="success-sound.mp3" preload="auto"></audio>
+
+    <!-- Stage 1: The Hook -->
+    <section id="s1" class="visible">
+        <div id="typewriter-container">
+            <h1 id="typewriter"></h1>
+        </div>
+        <p class="fade-in-text">Di parin nagkikita in-person☹️.</p>
+        <div class="scroll-indicator">Scroll down</div>
+    </section>
+
+    <!-- Stage 2: Interactive Drawing -->
+    <section id="s2">
+        <div class="s2-text-overlay">
+            <h1>Draw with me.</h1>
+            <p>Drag your finger anywhere on the screen.</p>
+        </div>
+        <canvas id="drawingCanvas"></canvas>
+        <div class="scroll-indicator" style="bottom: 20px;">Scroll down</div>
+    </section>
+
+    <!-- Stage 3: The Memories (Editorial Grid + "Tingin" Spotify) -->
+    <section id="s3">
+        <h1>Mga favorite views ko lately.</h1>
+        <p>Kunware gallery muna yung mga screenshots natin until I finally see you.</p>
+        
+        <div class="portfolio-gallery">
+            <div class="gallery-card main-card">
+                <img src="pic1.jpg" alt="Memory 1" class="card-img">
+                <div class="card-overlay"><p class="card-title"></div>
+            </div>
+            <div class="gallery-card">
+                <img src="pic2.jpg" alt="Memory 2" class="card-img">
+                <div class="card-overlay"><p class="card-title"></p></div>
+            </div>
+            <div class="gallery-card">
+                <img src="pic3.jpg" alt="Memory 3" class="card-img">
+                <div class="card-overlay"><p class="card-title"></p></div>
+            </div>
+            <div class="gallery-card">
+                <img src="pic4.jpg" alt="Memory 4" class="card-img">
+                <div class="card-overlay"><p class="card-title"></p></div>
+            </div>
+            <div class="gallery-card">
+                <img src="pic5.jpg" alt="Memory 5" class="card-img">
+                <div class="card-overlay"><p class="card-title"></p></div>
+            </div>
+        </div>
+
+        <!-- Initial Love Song: "Tingin" by Cup of Joe -->
+        <div class="spotify-wrapper" id="spotifyWrapper">
+            <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/7b89Ffklm3xh4GI37vlZDZ?utm_source=generator&si=b2ac001f8f09425c" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+        </div>
+    </section>
+
+    <!-- Stage 4: The Courtship Ask -->
+    <section id="s4">
+        <h1 id="questionText">Pwede ba manligaw?</h1>
+        <p>I know hindi pa tayo nagkikita in person, mejo napatagal nang onte, last week sana, very fricking busy sa acads pero I don't want to wait anymore to show you how serious I am. Can I officially court you, bae? 🤎</p>
+        <div class="ask-container" id="askContainer">
+            <button class="action-btn" id="yesBtn">Yes, pwede 🥰</button>
+            <button class="action-btn" id="noBtn">Wag 😭</button>
+        </div>
+    </section>
+
+    <!-- Stage 5: Success, Itinerary & Flowers -->
+    <section id="successScreen">
+        <div class="flower-container">
+            <div class="flowers">
+                <div class="flower flower--1">
+                    <div class="flower__leafs flower__leafs--1"><div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div><div class="flower__white-circle"></div><div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div><div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div><div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div><div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div></div>
+                    <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div><div class="flower__line__leaf flower__line__leaf--5"></div><div class="flower__line__leaf flower__line__leaf--6"></div></div>
+                </div>
+                <div class="flower flower--2">
+                    <div class="flower__leafs flower__leafs--2"><div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div><div class="flower__white-circle"></div><div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div><div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div><div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div><div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div></div>
+                    <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+                </div>
+                <div class="flower flower--3">
+                    <div class="flower__leafs flower__leafs--3"><div class="flower__leaf flower__leaf--1"></div><div class="flower__leaf flower__leaf--2"></div><div class="flower__leaf flower__leaf--3"></div><div class="flower__leaf flower__leaf--4"></div><div class="flower__white-circle"></div><div class="flower__light flower__light--1"></div><div class="flower__light flower__light--2"></div><div class="flower__light flower__light--3"></div><div class="flower__light flower__light--4"></div><div class="flower__light flower__light--5"></div><div class="flower__light flower__light--6"></div><div class="flower__light flower__light--7"></div><div class="flower__light flower__light--8"></div></div>
+                    <div class="flower__line"><div class="flower__line__leaf flower__line__leaf--1"></div><div class="flower__line__leaf flower__line__leaf--2"></div><div class="flower__line__leaf flower__line__leaf--3"></div><div class="flower__line__leaf flower__line__leaf--4"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="success-content">
+            <div class="heart-icon">🤎</div>
+            <h1>Thank you! 🥰</h1>
+            <p>I'll take good care of this.</p>
+            
+            <div id="successSpotifyContainer"></div>
+
+            <div class="itinerary-card">
+                <h3>✨ October Cubao Trip ✨</h3>
+                <p class="itinerary-date">🗓️ Date: TBA</p>
+                <ul class="plan-list">
+                    <li>☀️ <div><span>Morning:</span> Coffee run & Art in Island / Gateway</div></li>
+                    <li>🛍️ <div><span>Afternoon:</span> Ukay vibes or tambay at Cubao Expo</div></li>
+                    <li>🌃 <div><span>Evening:</span> Nice dinner date & chill drinks</div></li>
+                    <li class="quality-time">🤫 <div><span>Late Night:</span> Quality time sa room natin</div></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- WebGL Shaders -->
+    <script type="x-shader/x-fragment" id="fragmentShader">
+        #define PI 3.14159265359
+        uniform float u_ratio;
+        uniform float u_moving;
+        uniform float u_stop_time;
+        uniform float u_speed;
+        uniform vec2 u_stop_randomizer;
+        uniform float u_clean;
+        uniform vec2 u_point;
+        uniform float u_flower_scale;
+        uniform sampler2D u_texture;
+        varying vec2 vUv;
+    
+        float rand(vec2 n) { return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453); }
+        float noise(vec2 n) {
+            const vec2 d = vec2(0.0, 1.0);
+            vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+            return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+        }
+    
+        float flower_shape(vec2 _point, float _size, float _outline, float _tickniess, float _noise, float _angle_offset) {
+            float random_by_uv = noise(vUv);
+            float petals_thickness = .5;
+            float petals_number = 5. + floor(u_stop_randomizer[0] * 4.);
+            float angle_animated_offset = .7 * (random_by_uv - .5) / (.2 + 30. * u_stop_time);
+            float flower_angle = atan(_point.y, _point.x) - angle_animated_offset;
+            float flower_sectoral_shape = abs(sin(flower_angle * .5 * petals_number + _angle_offset)) + _tickniess * petals_thickness;
+            vec2 flower_size_range = vec2(4., 18.) * u_flower_scale;
+            float flower_radial_shape = length(_point) * (flower_size_range[0] + flower_size_range[1] * u_stop_randomizer[0]);
+            float radius_noise = sin(flower_angle * 13. + 15. * random_by_uv);
+            flower_radial_shape += _noise * radius_noise;
+            float flower_radius_grow = min(20000. * u_stop_time, 1.);
+            flower_radius_grow = 1. / flower_radius_grow;
+            float flower_shape = 1. - smoothstep(0., _size * flower_sectoral_shape, _outline * flower_radius_grow * flower_radial_shape);
+            flower_shape *= (1. - u_moving);
+            flower_shape *= (1. - step(1., u_stop_time));
+            return flower_shape;
+        }
+    
+        void main() {
+            vec3 base = texture2D(u_texture, vUv).xyz;
+            vec2 cursor = vUv - u_point.xy;
+            cursor.x *= u_ratio;
+            vec3 stem_color = vec3(2.2, 1.1, .3);
+            float stem_radius = .005 * u_speed * u_moving;
+            float stem_shape = 1. - pow(smoothstep(0., stem_radius, dot(cursor, cursor)), .03);
+            vec3 stem = stem_shape * stem_color;
+            vec3 flower_color = vec3(2.6 + u_stop_randomizer[0] * .4, 1.4 + u_stop_randomizer[1] * .5, .5 + u_stop_randomizer[1] * .3);
+            vec3 flower_new = flower_color * flower_shape(cursor, 1., .96, 1., .15, 0.);
+            vec3 flower_mask = 1. - vec3(flower_shape(cursor, 1.05, 1.07, 1., .15, 0.));
+            vec3 flower_mid = vec3(-.35, -.25, -.3) * flower_shape(cursor, .15, 1., 2., .1, 1.9);
+            vec3 color = base * flower_mask + (flower_new + flower_mid + stem);
+            color *= u_clean;
+            color = clamp(color, vec3(.05, .02, .0), vec3(1., .78, .45));
+            gl_FragColor = vec4(color, 1.);
+        }
+    </script>
+    <script type="x-shader/x-vertex" id="vertexShader">
+        varying vec2 vUv;
+        void main() { vUv = uv; gl_Position = vec4(position, 1.); }
+    </script>
+
+    <script type="module" src="ask.js" defer></script>
+</body>
+</html>

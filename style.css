@@ -1,0 +1,175 @@
+:root {
+    --bg-deep: #241610;
+    --cream: #f6e9d8;
+    --gold: #d9a35e;
+    --gold-bright: #e8b56e;
+    --rose: #cc8a7a;
+    --sage: #93a683;
+}
+
+html, body {
+    overflow: hidden;
+    overscroll-behavior: none;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    background: var(--bg-deep);
+}
+
+.container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    background:
+        radial-gradient(ellipse 70% 45% at 8% 105%, rgba(147, 166, 131, 0.22), transparent 60%),
+        radial-gradient(ellipse 70% 45% at 92% 105%, rgba(204, 138, 122, 0.22), transparent 60%),
+        radial-gradient(ellipse 60% 40% at 50% -10%, rgba(217, 163, 94, 0.16), transparent 60%),
+        var(--bg-deep);
+    padding-bottom: env(safe-area-inset-bottom);
+    box-sizing: border-box;
+}
+
+.title {
+    z-index: 1;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: var(--cream);
+    text-shadow: 0 0 14px rgba(217, 163, 94, 0.45);
+    user-select: none;
+    padding: 16px 20px;
+}
+
+#hint {
+    max-width: 60%;
+    opacity: .9;
+}
+
+canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    touch-action: none;
+}
+
+#screenshot {
+    background: linear-gradient(135deg, rgba(217, 163, 94, 0.25), rgba(204, 138, 122, 0.2));
+    border-radius: 20px;
+    outline: none;
+    border: 1px solid rgba(217, 163, 94, 0.5);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition: background 160ms ease, transform 160ms ease;
+}
+
+#screenshot:hover {
+    background: linear-gradient(135deg, rgba(217, 163, 94, 0.4), rgba(204, 138, 122, 0.32));
+    transform: translateY(-1px);
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 12px;
+        padding: 12px 14px;
+    }
+    #hint {
+        max-width: 55%;
+    }
+}
+
+/* ---------- next-page button: bold and clearly visible ---------- */
+
+.next-link {
+    position: fixed;
+    top: 18px;
+    right: 18px;
+    z-index: 3;
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: #2b1a12;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 999px;
+    background: linear-gradient(120deg, var(--gold-bright), var(--rose), var(--gold-bright));
+    background-size: 200% auto;
+    box-shadow: 0 8px 24px rgba(217, 163, 94, 0.45);
+    opacity: 0;
+    animation:
+        next-link-in 700ms cubic-bezier(.34, 1.4, .64, 1) forwards,
+        next-link-pulse 2200ms ease-in-out 1.2s infinite,
+        next-link-sheen 4s linear infinite;
+    animation-delay: 2.5s, 3.2s, 3.2s;
+    transition: transform 180ms cubic-bezier(.34, 1.4, .64, 1), box-shadow 180ms ease;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.next-link:hover {
+    transform: translateY(-3px) scale(1.06);
+    box-shadow: 0 14px 34px rgba(217, 163, 94, 0.6);
+}
+
+.next-link:active {
+    transform: translateY(-1px) scale(1.02);
+}
+
+.next-link .spark {
+    display: inline-block;
+    animation: spark-spin 3s ease-in-out infinite;
+}
+
+.next-link .arrow {
+    display: inline-block;
+    transition: transform 180ms ease;
+}
+
+.next-link:hover .arrow {
+    transform: translateX(4px);
+}
+
+@keyframes next-link-in {
+    from { opacity: 0; transform: translateY(-14px) scale(.85); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes next-link-pulse {
+    0%, 100% { box-shadow: 0 8px 24px rgba(217, 163, 94, 0.45); }
+    50% { box-shadow: 0 10px 34px rgba(217, 163, 94, 0.8); }
+}
+
+@keyframes next-link-sheen {
+    0% { background-position: 0% center; }
+    100% { background-position: 200% center; }
+}
+
+@keyframes spark-spin {
+    0%, 100% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .next-link {
+        animation: none;
+        opacity: 1;
+    }
+    .next-link .spark {
+        animation: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .next-link {
+        top: env(safe-area-inset-top, 14px);
+        right: 14px;
+        font-size: 13px;
+        padding: 12px 20px;
+    }
+}

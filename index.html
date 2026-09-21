@@ -1,339 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title> Jho</title>
-    <style>
-        /* Animated Mocha/Espresso Gradient Background */
-        :root {
-            --bg-color: #2C2421; 
-            --text-color: #EAE0D5; 
-            --accent: #C4A493; 
-            --box-bg: rgba(58, 48, 44, 0.7); 
-            --btn-text: #2C2421;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#241610">
+  <title>Draw With Flowers! (GLSL Shader &amp; Three.js)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./style.css">
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", Roboto, Helvetica, sans-serif;
-            color: var(--text-color);
-            scroll-behavior: smooth;
-            overflow-x: hidden; 
-            background: linear-gradient(-45deg, #1E1816, #3A302C, #4A3B32, #2C2421);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        section {
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem; 
-            text-align: center;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: all 1s ease-out;
-            box-sizing: border-box;
-            width: 100%;
-        }
-
-        section.visible { opacity: 1; transform: translateY(0); }
-
-        h1 { 
-            font-size: clamp(1.8rem, 5vw, 2.5rem); 
-            font-weight: 400; 
-            letter-spacing: -0.02em; 
-            margin-bottom: 10px; 
-            line-height: 1.2;
-        }
-        
-        p { 
-            font-size: clamp(1rem, 3vw, 1.1rem); 
-            opacity: 0.9; 
-            max-width: 600px; 
-            line-height: 1.6; 
-            margin: 0 auto 15px auto;
-        }
-
-        /* Stage 1: Typewriter - Fixed for long text wrapping */
-        #typewriter-container {
-            width: 100%;
-            max-width: 90vw; 
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        #typewriter { 
-            display: inline; 
-            border-right: 2px solid var(--text-color); 
-            animation: blinkCursor 0.75s step-end infinite;
-        }
-
-        @keyframes blinkCursor {
-            from, to { border-color: transparent; }
-            50% { border-color: var(--text-color); }
-        }
-        
-        .scroll-indicator {
-            position: absolute;
-            bottom: 40px;
-            animation: bounce 2s infinite;
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.6;
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-            40% { transform: translateY(-10px); }
-            60% { transform: translateY(-5px); }
-        }
-
-        /* Stage 2: Shared Time */
-        .time-box {
-            background: var(--box-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            padding: clamp(20px, 5vw, 40px) clamp(30px, 8vw, 60px);
-            border-radius: 20px;
-            margin-top: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            width: 90%;
-            max-width: 400px;
-            box-sizing: border-box;
-        }
-
-        .time-box h2 { margin: 0 0 10px 0; font-size: 0.9rem; opacity: 0.7; text-transform: uppercase; letter-spacing: 1.5px; }
-        .time-box .time { font-size: clamp(3rem, 10vw, 4.5rem); font-weight: 300; letter-spacing: -2px; color: var(--accent); }
-
-        /* Stage 3: Polaroid Gallery */
-        .gallery {
-            display: flex;
-            gap: 15px;
-            margin: 20px 0;
-            justify-content: center;
-            flex-wrap: wrap; 
-            width: 100%;
-            max-width: 600px;
-        }
-
-        .polaroid {
-            background: #EAE0D5;
-            padding: 8px 8px 35px 8px;
-            border-radius: 6px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-            transform: rotate(-2deg);
-            flex: 0 1 auto;
-        }
-        
-        .polaroid:nth-child(2) { transform: rotate(3deg) translateY(-5px); }
-        .polaroid:nth-child(3) { transform: rotate(-1deg); }
-
-        .polaroid img {
-            width: clamp(100px, 28vw, 150px); 
-            height: clamp(130px, 36vw, 190px);
-            object-fit: cover;
-            filter: sepia(30%) contrast(95%);
-            border-radius: 2px;
-        }
-
-        .spotify-embed { 
-            margin-top: 30px; 
-            border-radius: 12px; 
-            width: 100%; 
-            max-width: 350px; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); 
-        }
-
-        /* Stage 4: Mobile-Optimized Ask Container */
-        .ask-container { 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            gap: 15px; 
-            margin-top: 30px; 
-            width: 100%;
-        }
-        
-        button.action-btn {
-            padding: 18px 32px;
-            border-radius: 50px;
-            border: none;
-            font-weight: 500;
-            transition: all 0.2s ease;
-            width: 90%; 
-            max-width: 300px;
-            box-sizing: border-box;
-            cursor: pointer;
-            text-align: center;
-            line-height: 1.3;
-        }
-
-        #yesBtn { 
-            background-color: var(--text-color); 
-            color: var(--btn-text); 
-            font-size: 1.1rem;
-            z-index: 10;
-            word-wrap: break-word; 
-        }
-
-        #noBtn { 
-            background-color: transparent; 
-            color: var(--text-color); 
-            font-size: 1rem;
-            border: 1px solid rgba(234, 224, 213, 0.3);
-        }
-        
-        #successScreen { display: none; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-
-        @media (max-width: 375px) {
-            .polaroid { padding: 6px 6px 25px 6px; }
-            button.action-btn { padding: 15px 20px; }
-        }
-    </style>
 </head>
 <body>
+<div class="container">
+    <canvas id="canvas"></canvas>
+    <div class="title" id="hint">Tap to bloom a flower &middot; Drag to trace &middot; Double-tap or Space to fade</div>
+    <button class="title" id="screenshot" type="button">Save...</button>
+</div>
+<!-- THIS LINK POINTS TO THE NEW FOLDER -->
+<a class="next-link" id="nextLink" href="./for her/ask.html"><span class="spark">&#10022;</span> There's something after this <span class="arrow">&rarr;</span></a>
 
-    <!-- Hidden Audio File for the Success Sound -->
-    <audio id="successSound" src="success-sound.mp3" preload="auto"></audio>
+<script type="x-shader/x-fragment" id="fragmentShader">
+    #define PI 3.14159265359
 
-    <!-- Stage 1: The Hook -->
-    <section id="s1" class="visible">
-        <div id="typewriter-container">
-            <h1 id="typewriter"></h1>
-        </div>
-        <p style="opacity: 0; animation: fadeIn 2s forwards 3.5s;">Di parin nagkikita in-person☹️.</p>
-        <div class="scroll-indicator">Scroll down</div>
-        <style>@keyframes fadeIn { to { opacity: 0.8; } }</style>
-    </section>
+    uniform float u_ratio;
+    uniform float u_moving;
+    uniform float u_stop_time;
+    uniform float u_speed;
+    uniform vec2 u_stop_randomizer;
+    uniform float u_clean;
+    uniform vec2 u_point;
+    uniform float u_flower_scale;
+    uniform sampler2D u_texture;
+    varying vec2 vUv;
 
-    <!-- Stage 2: Shared Reality -->
-    <section id="s2">
-        <h1>Same sky. Same time.</h1>
-        <div class="time-box">
-            <h2>Our Time</h2>
-            <div class="time" id="sharedTime">--:--</div>
-        </div>
-    </section>
+    float rand(vec2 n) {
+        return fract(sin(dot(n, vec2(12.9898, 4.1414))) * 43758.5453);
+    }
+    float noise(vec2 n) {
+        const vec2 d = vec2(0.0, 1.0);
+        vec2 b = floor(n), f = smoothstep(vec2(0.0), vec2(1.0), fract(n));
+        return mix(mix(rand(b), rand(b + d.yx), f.x), mix(rand(b + d.xy), rand(b + d.yy), f.x), f.y);
+    }
 
-    <!-- Stage 3: The Memories -->
-    <section id="s3">
-        <h1>Mga favorite views ko lately.</h1>
-        <p>Kunware polaroids muna yung mga screenshots natin until I finally see you.</p>
-        <div class="gallery">
-            <div class="polaroid"><img src="pic1.jpg" alt="VC Screenshot 1"></div>
-            <div class="polaroid"><img src="pic2.jpg" alt="Selfie"></div>
-            <div class="polaroid"><img src="pic3.jpg" alt="VC Screenshot 2"></div>
-        </div>
-        
-        <!-- Taylor Swift "the 1" Spotify Embed -->
-        <iframe data-testid="embed-iframe" style="border-radius:12px" src="https://open.spotify.com/embed/track/0Jlcvv8IykzHaSmj49uNW8?utm_source=generator&si=b061c4fe7b4d4f40" width="100%" height="152" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-    </section>
+    float flower_shape(vec2 _point, float _size, float _outline, float _tickniess, float _noise, float _angle_offset) {
+        float random_by_uv = noise(vUv);
 
-    <!-- Stage 4: The Mobile-Optimized Ask -->
-    <section id="s4">
-        <h1 id="questionText">May mas malaking question ako for you soon.</h1>
-        <p>Pero for this time, ano gusto mo bae? WHAHWAHWAH, anyting u like, kahit ano, ikaw bahala, gawin natin mamaya.😜😏</p>
-        <div class="ask-container" id="askContainer">
-            <button class="action-btn" id="yesBtn">Yes, G ako!</button>
-            <button class="action-btn" id="noBtn">Wag 😭</button>
-        </div>
-    </section>
+        float petals_thickness = .5;
+        float petals_number = 5. + floor(u_stop_randomizer[0] * 4.);
+        float angle_animated_offset = .7 * (random_by_uv - .5) / (.2 + 30. * u_stop_time);
+        float flower_angle = atan(_point.y, _point.x) - angle_animated_offset;
+        float flower_sectoral_shape = abs(sin(flower_angle * .5 * petals_number + _angle_offset)) + _tickniess * petals_thickness;
 
-    <!-- Stage 5: Success -->
-    <section id="successScreen">
-        <h1>It's a date. 🤎</h1>
-    </section>
+        vec2 flower_size_range = vec2(4., 18.) * u_flower_scale;
+        float flower_radial_shape = length(_point) * (flower_size_range[0] + flower_size_range[1] * u_stop_randomizer[0]);
+        float radius_noise = sin(flower_angle * 13. + 15. * random_by_uv);
+        flower_radial_shape += _noise * radius_noise;
 
-    <script>
-        // 1. Typewriter Effect
-        const text = "Crazy na mag almost 1 month since nung nakita kita sa ano..WHAHWH, anyways";
-        let i = 0;
-        function typeWriter() {
-            if (i < text.length) {
-                document.getElementById("typewriter").innerHTML += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 80);
-            }
-        }
-        window.onload = () => { setTimeout(typeWriter, 300); updateTime(); };
+        float flower_radius_grow = min(20000. * u_stop_time, 1.);
+        flower_radius_grow = 1. / flower_radius_grow;
 
-        // 2. Scroll Reveal Logic
-        const sections = document.querySelectorAll('section');
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, { threshold: 0.2 }); 
-        sections.forEach(sec => observer.observe(sec));
+        float flower_shape = 1. - smoothstep(0., _size * flower_sectoral_shape, _outline * flower_radius_grow * flower_radial_shape);
+        flower_shape *= (1. - u_moving);
 
-        // 3. Shared Clock
-        function updateTime() {
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-            document.getElementById('sharedTime').innerText = timeString;
-        }
-        setInterval(updateTime, 1000);
+        flower_shape *= (1. - step(1., u_stop_time));
 
-        // 4. The Expanding Yes Button (Responsive Logic)
-        const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
-        const s4 = document.getElementById('s4');
-        const successScreen = document.getElementById('successScreen');
-        const successSound = document.getElementById('successSound'); // Grab the audio element
-        
-        const noTexts = [
-            "Wag naman 😭", 
-            "Sure ka na ba? 🥺", 
-            "Wait lang isipin mo muna 😭", 
-            "Grabe siya 💔", 
-            "Sakit naman 🥺", 
-            "Sige na press Yes na 😭",
-            "Ahh ganon 😭",
-            "Luhh 😭",
-        ];
-        let clickCount = 0;
+        return flower_shape;
+    }
 
-        noBtn.addEventListener('click', (e) => {
-            if(clickCount < noTexts.length) {
-                noBtn.innerText = noTexts[clickCount];
-            } else {
-                noBtn.innerText = noTexts[noTexts.length - 1]; 
-            }
-            clickCount++;
+    void main() {
+        vec3 base = texture2D(u_texture, vUv).xyz;
+        vec2 cursor = vUv - u_point.xy;
+        cursor.x *= u_ratio;
 
-            const currentFontSize = window.getComputedStyle(yesBtn).getPropertyValue('font-size');
-            const newSize = parseFloat(currentFontSize) * 1.3; 
-            
-            yesBtn.style.fontSize = `${newSize}px`;
-            yesBtn.style.padding = `${newSize * 0.8}px ${newSize * 1.2}px`;
-            yesBtn.style.width = 'auto'; 
-            yesBtn.style.maxWidth = '90vw'; 
-        });
+        // STEM
+        vec3 stem_color = vec3(2.2, 1.1, .3);
+        float stem_radius = .005 * u_speed * u_moving;
+        float stem_shape = 1. - pow(smoothstep(0., stem_radius, dot(cursor, cursor)), .03);
+        vec3 stem = stem_shape * stem_color;
 
-        // 5. Success Logic with Sound
-        yesBtn.addEventListener('click', () => {
-            // Play the sound effect immediately when clicked
-            successSound.play();
-            
-            s4.style.display = 'none';
-            successScreen.style.display = 'flex';
-            setTimeout(() => { successScreen.classList.add('visible'); }, 50);
-        });
-    </script>
+        // FLOWER
+        vec3 flower_color = vec3(2.6 + u_stop_randomizer[0] * .4, 1.4 + u_stop_randomizer[1] * .5, .5 + u_stop_randomizer[1] * .3);
+
+        vec3 flower_new = flower_color * flower_shape(cursor, 1., .96, 1., .15, 0.);
+        vec3 flower_mask = 1. - vec3(flower_shape(cursor, 1.05, 1.07, 1., .15, 0.));
+        vec3 flower_mid = vec3(-.35, -.25, -.3) * flower_shape(cursor, .15, 1., 2., .1, 1.9);
+
+        vec3 color = base * flower_mask + (flower_new + flower_mid + stem);
+        color *= u_clean;
+        color = clamp(color, vec3(.05, .02, .0), vec3(1., .78, .45));
+
+        gl_FragColor = vec4(color, 1.);
+    }
+</script>
+
+<script type="x-shader/x-vertex" id="vertexShader">
+    varying vec2 vUv;
+    void main() {
+        vUv = uv;
+        gl_Position = vec4(position, 1.);
+    }
+</script>
+
+<script type="module" src="./script.js"></script>
 </body>
 </html>
